@@ -1,11 +1,12 @@
 <!DOCTYPE=html>
 <head>
 	<title>Chat App</title>
+	<link rel='stylesheet' href='/stylesheets/style.css'>
 	<script src='/socket.io/socket.io.js'></script>
-	<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+	<script src='http://code.jquery.com/jquery-1.10.1.min.js'></script>
 	<script>
 		var socket = io.connect('http://localhost');
-		socket.on('messages', function(data) {
+		socket.on('messages', function (data) {
 			var length = data['messages'].length;
 			var messages = data['messages'];
 			for (var i = 0; i < length; i++) {
@@ -13,14 +14,34 @@
 				$('.chats').append(message);
 			}
 		});
-		var user_msg = prompt('Submit a message!');
-		socket.emit('message', { message: user_msg });
+		socket.on('new message', function (data) {
+			var message = '<li>' + data['message'] + '</li>';
+			$('.chats').append(message);
+		});
 	</script>
 </head>
 <body>
 	<h1>Chat App</h1>
 	<p>Welcome to the chat app.</p>
-	<ul class='chats'>
-	</ul>
+	<input class='draft' type='text'>
+	<button class='send'>Send</button>
+	<div id='chatbox'>
+		<ul class='chats'>
+		</ul>
+	</div>
+	<script>
+		$('.send').on('click', function() {
+			var send_message = $('.draft').val();
+			socket.emit('message', {message: send_message });
+			$('.draft').val('');
+		});
+		$('.draft').on('keyup', function(e) {
+			if (e.which == 13) {
+				var send_message = $('.draft').val();
+				socket.emit('message', {message: send_message });
+				$('.draft').val('');
+			}
+		});
+	</script>
 </body>
 </html>
