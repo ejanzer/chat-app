@@ -5,7 +5,9 @@
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='http://code.jquery.com/jquery-1.10.1.min.js'></script>
 	<script>
+		var username = prompt('Please enter a username: ');
 		var socket = io.connect('http://localhost');
+		socket.emit('set username', {username: username});
 		socket.on('messages', function (data) {
 			var length = data['messages'].length;
 			var messages = data['messages'];

@@ -11,7 +11,7 @@ var path = require('path');
 
 var app = express();
 
-var messages_arr = ['Hello, world!'];
+var messages_arr = ['Computer: Hello, world!'];
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -42,9 +42,20 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function(socket) {
+	socket.on('set username', function(data) {
+		socket.set('username', data['username'], function() {
+			console.log('Username set to ' + data['username']);
+		});
+	});
 	socket.emit('messages', {messages: messages_arr });
 	socket.on('message', function (data) {
-		messages_arr.push(data['message']);
-		socket.emit('new message', {message: data['message']});
+		socket.get('username', function (err, username) {
+			console.log(username);
+			var message = username + ': ' + data['message'];
+			console.log(message);
+			messages_arr.push(message);
+			socket.emit('new message', {message: message});
+			socket.broadcast.emit('new message', {message: message});
+		});
 	});
 });
