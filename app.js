@@ -11,7 +11,7 @@ var path = require('path');
 
 var app = express();
 
-var messages = [];
+var messages_arr = [];
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -42,8 +42,9 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function(socket) {
-	socket.emit('messages', {message: 'Hello, world!' });
+	socket.emit('messages', {messages: ['Hello, world!', 'Hello, twice!'] });
 	socket.on('message', function (data) {
-		console.log(data['message']);
+		messages_arr.push(data['message']);
+		socket.emit('messages', {messages: messages_arr});
 	});
 });

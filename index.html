@@ -6,10 +6,15 @@
 	<script>
 		var socket = io.connect('http://localhost');
 		socket.on('messages', function(data) {
-			var message = '<li>' + data['message'] + '</li>';
-			$('.chats').append(message);
-			socket.emit('message', { message: 'Hello, again!' });
+			var length = data['messages'].length;
+			var messages = data['messages'];
+			for (var i = 0; i < length; i++) {
+				var message = '<li>' + messages[i] + '</li>';
+				$('.chats').append(message);
+			}
 		});
+		var user_msg = prompt('Submit a message!');
+		socket.emit('message', { message: user_msg });
 	</script>
 </head>
 <body>
