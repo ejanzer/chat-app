@@ -9,4 +9,21 @@ a {
 
 ul {
 	line-height: 1.5em;
+	list-style-type: none;
+}
+
+div#chatbox {
+	height: 300px;
+	width: 500px;
+	border: solid 1px #888;
+	border-radius: 5px 5px 0 0;
+	overflow: auto;
+	padding: 20px;
+	background-clip: content-box;
+}
+
+.draft {
+	width: 435px;
+	height: 2em;
+	margin-top: 10px;
 }

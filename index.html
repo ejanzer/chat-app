@@ -2,6 +2,7 @@
 <head>
 	<title>Chat App</title>
 	<link rel='stylesheet' href='/stylesheets/style.css'>
+	<link rel ='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css'>
 	<script src='/socket.io/socket.io.js'></script>
 	<script src='http://code.jquery.com/jquery-1.10.1.min.js'></script>
 	<script>
@@ -25,13 +26,16 @@
 <body>
 	<h1>Chat App</h1>
 	<p>Welcome to the chat app.</p>
-	<input class='draft' type='text'>
-	<button class='send'>Send</button>
 	<div id='chatbox'>
 		<ul class='chats'>
 		</ul>
 	</div>
+	<input class='draft' type='text' value='Type your message here.'>
+	<button class='send btn btn-default'>Send</button>
 	<script>
+		$('.draft').on('click', function() {
+			$('.draft').val('');
+		});
 		$('.send').on('click', function() {
 			var send_message = $('.draft').val();
 			socket.emit('message', {message: send_message });
