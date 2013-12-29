@@ -11,6 +11,8 @@ var path = require('path');
 
 var app = express();
 
+var messages = [];
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -40,8 +42,8 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function(socket) {
-	socket.emit('news', {hello: 'world' });
-	socket.on('my other event', function (data) {
-		console.log(data);
+	socket.emit('messages', {message: 'Hello, world!' });
+	socket.on('message', function (data) {
+		console.log(data['message']);
 	});
 });

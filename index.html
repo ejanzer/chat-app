@@ -2,16 +2,20 @@
 <head>
 	<title>Chat App</title>
 	<script src='/socket.io/socket.io.js'></script>
+	<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
 	<script>
 		var socket = io.connect('http://localhost');
-		socket.on('news', function(data) {
-			console.log(data);
-			socket.emit('my other event', { my: 'data' });
+		socket.on('messages', function(data) {
+			var message = '<li>' + data['message'] + '</li>';
+			$('.chats').append(message);
+			socket.emit('message', { message: 'Hello, again!' });
 		});
 	</script>
 </head>
 <body>
 	<h1>Chat App</h1>
 	<p>Welcome to the chat app.</p>
+	<ul class='chats'>
+	</ul>
 </body>
 </html>
