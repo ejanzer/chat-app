@@ -14,12 +14,15 @@ ul {
 
 div#chatbox {
 	height: 300px;
-	width: 500px;
 	border: solid 1px #888;
-	border-radius: 5px 5px 0 0;
+	border-radius: 5px;
 	overflow: auto;
 	padding: 20px;
 	background-clip: content-box;
+}
+
+div#container {
+	width: 500px;
 }
 
 .draft {

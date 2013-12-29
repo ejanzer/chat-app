@@ -26,12 +26,16 @@
 <body>
 	<h1>Chat App</h1>
 	<p>Welcome to the chat app.</p>
-	<div id='chatbox'>
-		<ul class='chats'>
-		</ul>
+	<div id='container'>
+		<div id='chatbox'>
+			<ul class='chats'>
+			</ul>
+		</div>
+		<div class='form-group'>
+			<input class='draft' type='text' value='Type your message here.'>
+			<button class='send btn btn-default'>Send</button>
+		</div>
 	</div>
-	<input class='draft' type='text' value='Type your message here.'>
-	<button class='send btn btn-default'>Send</button>
 	<script>
 		$('.draft').on('click', function() {
 			$('.draft').val('');
